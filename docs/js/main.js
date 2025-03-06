@@ -88,7 +88,13 @@ document.addEventListener('DOMContentLoaded', function() {
 const STREAM_WIDTH = 800;
 const STREAM_HEIGHT = 450;
 let streamScreen;
+let exclusiveVideoPlayer; // Nova variável para o player de vídeo exclusivo
 let cssRenderer;
+
+// URL do vídeo no Bunny Stream
+const EXCLUSIVE_VIDEO_URL = 'https://iframe.mediadelivery.net/play/390540/c4729b0e-0865-48ee-8520-728aae9d970a';
+const EXCLUSIVE_VIDEO_WIDTH = 800;
+const EXCLUSIVE_VIDEO_HEIGHT = 450;
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -762,6 +768,9 @@ function createExclusiveLunarTerrain() {
     const exclusiveAmbient = new THREE.AmbientLight(0xff2200, 0.2);
     exclusiveAmbient.position.set(0, 0, -terrainLimit - 10000);
     scene.add(exclusiveAmbient);
+    
+    // Cria e adiciona o player de vídeo exclusivo
+    createExclusiveVideoPlayer();
     
     scene.add(mesh);
     return mesh;
@@ -2115,6 +2124,52 @@ function updateExclusiveAccess(hasAccess) {
         console.log('Terreno exclusivo visível:', exclusiveLunarTerrain.visible);
     }
     
+    // Atualiza o player de vídeo exclusivo
+    // Se o acesso foi revogado, remove o player se existir
+    if (!hasAccessBoolean && exclusiveVideoPlayer) {
+        // Remove o player do CSS Scene
+        if (exclusiveVideoPlayer.playerObject && exclusiveVideoPlayer.playerObject.parent) {
+            exclusiveVideoPlayer.playerObject.parent.remove(exclusiveVideoPlayer.playerObject);
+        }
+        
+        // Remove as luzes
+        if (exclusiveVideoPlayer.playerLight1 && exclusiveVideoPlayer.playerLight1.parent) {
+            exclusiveVideoPlayer.playerLight1.parent.remove(exclusiveVideoPlayer.playerLight1);
+            exclusiveVideoPlayer.playerLight1.target.parent.remove(exclusiveVideoPlayer.playerLight1.target);
+        }
+        
+        if (exclusiveVideoPlayer.playerLight2 && exclusiveVideoPlayer.playerLight2.parent) {
+            exclusiveVideoPlayer.playerLight2.parent.remove(exclusiveVideoPlayer.playerLight2);
+            exclusiveVideoPlayer.playerLight2.target.parent.remove(exclusiveVideoPlayer.playerLight2.target);
+        }
+        
+        // Remove o halo
+        if (exclusiveVideoPlayer.halo && exclusiveVideoPlayer.halo.parent) {
+            exclusiveVideoPlayer.halo.parent.remove(exclusiveVideoPlayer.halo);
+        }
+        
+        // Remove a plataforma
+        if (exclusiveVideoPlayer.platform && exclusiveVideoPlayer.platform.parent) {
+            exclusiveVideoPlayer.platform.parent.remove(exclusiveVideoPlayer.platform);
+        }
+        
+        // Limpa a referência
+        exclusiveVideoPlayer = null;
+        
+        // Remove também o elemento HTML do DOM
+        const playerElement = document.getElementById('exclusive-video-player-container');
+        if (playerElement) {
+            playerElement.remove();
+        }
+        
+        console.log('Player de vídeo exclusivo removido devido a revogação de acesso');
+    } 
+    // Se o acesso foi concedido, cria o player se não existir
+    else if (hasAccessBoolean && !exclusiveVideoPlayer) {
+        console.log('Criando player de vídeo exclusivo para o usuário com acesso');
+        createExclusiveVideoPlayer();
+    }
+    
     // Atualiza a mensagem do portal se estiver visível
     if (portalMessageElement && portalMessageElement.style.display === 'block') {
         if (currentLanguage === 'PT') {
@@ -2285,6 +2340,216 @@ function createDustParticleTexture() {
     texture.needsUpdate = true;
     
     return texture;
+}
+
+// Função para criar o player de vídeo exclusivo no terreno lunar
+function createExclusiveVideoPlayer() {
+    // Remover qualquer player existente para evitar duplicatas
+    const existingPlayer = document.getElementById('exclusive-video-player-container');
+    if (existingPlayer) {
+        existingPlayer.remove();
+    }
+    
+    // Criar container principal com ID para facilitar a remoção futura
+    const containerElement = document.createElement('div');
+    containerElement.id = 'exclusive-video-player-container';
+    containerElement.style.width = EXCLUSIVE_VIDEO_WIDTH + 'px';
+    containerElement.style.height = EXCLUSIVE_VIDEO_HEIGHT + 'px';
+    containerElement.style.position = 'relative';
+    containerElement.style.backgroundColor = '#000000';
+    containerElement.style.border = '20px solid #ff6600';
+    containerElement.style.borderRadius = '15px';
+    containerElement.style.overflow = 'hidden';
+    containerElement.style.pointerEvents = 'auto';
+    
+    // Criar container de vídeo
+    const videoContainer = document.createElement('div');
+    videoContainer.style.width = '100%';
+    videoContainer.style.height = '100%';
+    videoContainer.style.position = 'relative';
+    videoContainer.style.display = 'flex';
+    videoContainer.style.flexDirection = 'column';
+    videoContainer.style.justifyContent = 'center';
+    videoContainer.style.alignItems = 'center';
+    videoContainer.style.backgroundColor = '#000'; // Fundo preto para o container do vídeo
+    
+    // Título superior no estilo de stream
+    const titleElement = document.createElement('div');
+    titleElement.textContent = '🎬 VÍDEO EXCLUSIVO 🎬';
+    titleElement.style.backgroundColor = '#ff0000';
+    titleElement.style.color = 'white';
+    titleElement.style.padding = '15px';
+    titleElement.style.fontSize = '24px';
+    titleElement.style.fontWeight = 'bold';
+    titleElement.style.textAlign = 'center';
+    titleElement.style.width = '100%';
+    titleElement.style.animation = 'blink 1s infinite';
+    
+    // Criar overlay inicial com botão play
+    const playOverlay = document.createElement('div');
+    playOverlay.style.position = 'absolute';
+    playOverlay.style.width = '100%';
+    playOverlay.style.height = 'calc(100% - 54px)'; // Altura total menos o header
+    playOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    playOverlay.style.display = 'flex';
+    playOverlay.style.justifyContent = 'center';
+    playOverlay.style.alignItems = 'center';
+    playOverlay.style.cursor = 'pointer';
+    playOverlay.style.zIndex = '2';
+    playOverlay.style.top = '54px'; // Posicionado logo abaixo do título
+    
+    // Criar botão play grande no centro
+    const playButton = document.createElement('div');
+    playButton.style.width = '100px';
+    playButton.style.height = '100px';
+    playButton.style.borderRadius = '50%';
+    playButton.style.backgroundColor = 'rgba(255, 102, 0, 0.8)';
+    playButton.style.display = 'flex';
+    playButton.style.justifyContent = 'center';
+    playButton.style.alignItems = 'center';
+    playButton.style.cursor = 'pointer';
+    playButton.style.boxShadow = '0 0 30px rgba(255, 102, 0, 0.5)';
+    playButton.style.transition = 'transform 0.3s, background-color 0.3s';
+    playButton.innerHTML = '<div style="width: 0; height: 0; border-style: solid; border-width: 20px 0 20px 40px; border-color: transparent transparent transparent #ffffff; margin-left: 10px;"></div>';
+    
+    // Adicionar efeito hover ao botão
+    playButton.addEventListener('mouseover', function() {
+        playButton.style.transform = 'scale(1.1)';
+        playButton.style.backgroundColor = 'rgba(255, 133, 51, 0.8)';
+    });
+    playButton.addEventListener('mouseout', function() {
+        playButton.style.transform = 'scale(1)';
+        playButton.style.backgroundColor = 'rgba(255, 102, 0, 0.8)';
+    });
+    
+    // Adicionar o botão play ao overlay
+    playOverlay.appendChild(playButton);
+    
+    // Iframe para o vídeo (inicialmente vazio)
+    const videoIframe = document.createElement('iframe');
+    videoIframe.style.width = '100%';
+    videoIframe.style.height = 'calc(100% - 54px)'; // Altura total menos o header
+    videoIframe.style.border = 'none';
+    videoIframe.style.position = 'absolute';
+    videoIframe.style.top = '54px';
+    videoIframe.style.left = '0';
+    videoIframe.allowFullscreen = true;
+    videoIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    videoIframe.style.zIndex = '1';
+    
+    // Construir a estrutura do player
+    containerElement.appendChild(titleElement);
+    containerElement.appendChild(videoIframe);
+    containerElement.appendChild(playOverlay);
+    
+    // Adicionar o evento de clique para iniciar o vídeo
+    playOverlay.addEventListener('click', function() {
+        // Carregar o iframe apenas quando o usuário clicar play
+        videoIframe.src = EXCLUSIVE_VIDEO_URL;
+        
+        // Ocultar o overlay de play após o clique
+        playOverlay.style.opacity = '0';
+        setTimeout(() => {
+            playOverlay.style.display = 'none';
+        }, 500);
+        
+        console.log('Vídeo exclusivo iniciado');
+    });
+    
+    // Criar objeto CSS3D para a frente
+    const playerObject = new CSS3DObject(containerElement);
+    
+    // Posicionar o player no terreno exclusivo
+    const terrainLimit = 7000;
+    playerObject.position.set(0, 800, -terrainLimit - 3000); // 3000 unidades além do portal
+    playerObject.scale.set(3, 3, 3);
+    
+    // Adicionar luzes de destaque para o player
+    const playerLight1 = new THREE.SpotLight(0xff6600, 2);
+    playerLight1.position.set(-800, 1100, -terrainLimit - 2800);
+    playerLight1.target.position.copy(playerObject.position);
+    scene.add(playerLight1);
+    scene.add(playerLight1.target);
+    
+    const playerLight2 = new THREE.SpotLight(0xff6600, 2);
+    playerLight2.position.set(800, 1100, -terrainLimit - 2800);
+    playerLight2.target.position.copy(playerObject.position);
+    scene.add(playerLight2);
+    scene.add(playerLight2.target);
+    
+    // Adicionar um halo de destaque
+    const haloGeometry = new THREE.PlaneGeometry(EXCLUSIVE_VIDEO_WIDTH * 3.3, EXCLUSIVE_VIDEO_HEIGHT * 3.3);
+    const haloMaterial = new THREE.MeshBasicMaterial({
+        color: 0xff6600,
+        transparent: true,
+        opacity: 0.3,
+        side: THREE.DoubleSide
+    });
+    
+    const halo = new THREE.Mesh(haloGeometry, haloMaterial);
+    halo.position.copy(playerObject.position);
+    halo.position.z -= 10;
+    scene.add(halo);
+    
+    // Animação pulsante para o halo
+    function animateHalo() {
+        const opacity = 0.3 + Math.sin(Date.now() * 0.003) * 0.2;
+        halo.material.opacity = opacity;
+        
+        // Animar intensidade das luzes
+        playerLight1.intensity = 2 + Math.sin(Date.now() * 0.002) * 0.5;
+        playerLight2.intensity = 2 + Math.sin(Date.now() * 0.003) * 0.5;
+        
+        requestAnimationFrame(animateHalo);
+    }
+    animateHalo();
+    
+    // Adicionar uma plataforma física sob o player
+    const platformGeometry = new THREE.BoxGeometry(1200, 100, 1200);
+    const platformMaterial = new THREE.MeshPhongMaterial({
+        color: 0x333333,
+        emissive: 0xff6600,
+        emissiveIntensity: 0.5
+    });
+    const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+    platform.position.set(0, 400, -terrainLimit - 3000); // Mesmo X e Z que o player, mas abaixo
+    scene.add(platform);
+    
+    // Adicionar pilares decorativos nos cantos da plataforma
+    const pillarGeometry = new THREE.CylinderGeometry(50, 50, 800, 16);
+    const pillarMaterial = new THREE.MeshPhongMaterial({
+        color: 0x333333,
+        emissive: 0xff6600,
+        emissiveIntensity: 0.3
+    });
+    
+    // Posições dos pilares
+    const pillarPositions = [
+        {x: -500, z: -500},
+        {x: 500, z: -500},
+        {x: -500, z: 500},
+        {x: 500, z: 500}
+    ];
+    
+    pillarPositions.forEach(pos => {
+        const pillar = new THREE.Mesh(pillarGeometry, pillarMaterial);
+        pillar.position.set(pos.x, 800, -terrainLimit - 3000 + pos.z);
+        scene.add(pillar);
+    });
+    
+    // Adicionar ao CSS Scene
+    cssScene.add(playerObject);
+    
+    // Armazenar na variável global para acesso posterior
+    exclusiveVideoPlayer = {
+        playerObject,
+        playerLight1,
+        playerLight2,
+        halo,
+        platform
+    };
+    
+    return exclusiveVideoPlayer;
 }
 
 // ... existing code ...

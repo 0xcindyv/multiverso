@@ -1649,10 +1649,21 @@
                     console.log('Tornando terreno exclusivo visível');
                     exclusiveLunarTerrain.visible = true;
                 }
+                
+                // Criar player de vídeo exclusivo se não existir
+                if (typeof createExclusiveVideoPlayer === 'function' && !exclusiveVideoPlayer) {
+                    console.log('Criando player de vídeo exclusivo para o detentor do Multiverso Pass');
+                    createExclusiveVideoPlayer();
+                }
             }
             
-            // Mostrar mensagem de sucesso
-            mostrarSucesso('Acesso completo concedido! Você pode explorar todo o Multiverso agora.');
+            // Mostrar mensagem de sucesso com informações sobre o vídeo exclusivo
+            const lang = getCurrentLanguage();
+            const successMessage = lang === 'PT' 
+                ? 'Acesso completo concedido! Você pode explorar todo o Multiverso agora e assistir ao vídeo exclusivo além do portal!'
+                : 'Full access granted! You can now explore the entire Multiverso and watch the exclusive video beyond the portal!';
+                
+            mostrarSucesso(successMessage);
         }
     </script>
 </body>
