@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MondrianLayout Visualizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .example {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .example h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #444;
+        }
+        .controls {
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        svg {
+            border: 1px solid #eee;
+            background-color: #f9f9f9;
+            width: 100%;
+            height: 200px;
+        }
+        .color-1 { fill: #E57373; }
+        .color-2 { fill: #81C784; }
+        .color-3 { fill: #64B5F6; }
+        .color-4 { fill: #FFD54F; }
+        .color-5 { fill: #9575CD; }
+        .color-6 { fill: #4DB6AC; }
+        .color-7 { fill: #F06292; }
+        .color-8 { fill: #A1887F; }
+        .fill-empty { fill: #EEEEEE; stroke: #DDDDDD; stroke-width: 1; }
+    </style>
+</head>
+<body>
+    <h1>MondrianLayout Visualizer</h1>
+    <p>Esta é uma ferramenta para visualizar o resultado do MondrianLayout. Digite uma lista de números separados por vírgula para ver o layout gerado.</p>
+    
+    <div class="container">
+        <div class="example">
+            <h2>Exemplo Básico</h2>
+            <div class="controls">
+                <input type="text" id="input1" value="5,5,4,1" placeholder="Digite números separados por vírgula">
+                <button onclick="updateLayout('input1', 'svg1', false)">Gerar Layout</button>
+            </div>
+            <svg id="svg1" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        
+        <div class="example">
+            <h2>Exemplo com Preenchimento</h2>
+            <div class="controls">
+                <input type="text" id="input2" value="5,3,2" placeholder="Digite números separados por vírgula">
+                <button onclick="updateLayout('input2', 'svg2', true)">Gerar Layout com Preenchimento</button>
+            </div>
+            <svg id="svg2" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        
+        <div class="example">
+            <h2>Exemplo Personalizado</h2>
+            <div class="controls">
+                <input type="text" id="input3" value="4,4,3,3,2,2,1" placeholder="Digite números separados por vírgula">
+                <button onclick="updateLayout('input3', 'svg3', false)">Gerar Layout</button>
+                <button onclick="updateLayout('input3', 'svg3', true)">Com Preenchimento</button>
+            </div>
+            <svg id="svg3" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+    </div>
+
+    <script type="module">
+        // Importar o MondrianLayout
+        import MondrianLayout from './utils/MondrianLayout.js';
+        
+        // Tornar a função updateLayout global
+        window.updateLayout = function(inputId, svgId, fillEmpty) {
+            const input = document.getElementById(inputId).value;
+            const svg = document.getElementById(svgId);
+            
+            // Limpar o SVG
+            while (svg.firstChild) {
+                svg.removeChild(svg.firstChild);
+            }
+            
+            // Converter a entrada em um array de números
+            const txList = input.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+            
+            if (txList.length === 0) {
+                alert('Por favor, insira números válidos separados por vírgula.');
+                return;
+            }
+            
+            // Criar o layout
+            const mondrian = new MondrianLayout(txList);
+            
+            // Obter os slots (com ou sem preenchimento)
+            const slots = fillEmpty ? mondrian.fillEmptySpaces(true) : mondrian.slots;
+            
+            // Ajustar o viewBox para o tamanho do layout
+            const size = mondrian.getSize();
+            svg.setAttribute('viewBox', `0 0 ${size.width} ${size.height}`);
+            
+            // Desenhar os slots
+            slots.forEach((slot, index) => {
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', slot.position.x);
+                rect.setAttribute('y', slot.position.y);
+                rect.setAttribute('width', slot.size);
+                rect.setAttribute('height', slot.size);
+                
+                // Determinar se este é um slot original ou de preenchimento
+                const isOriginal = mondrian.slots.some(original => 
+                    original.position.x === slot.position.x && 
+                    original.position.y === slot.position.y && 
+                    original.size === slot.size
+                );
+                
+                if (isOriginal) {
+                    // Usar cores diferentes para slots originais
+                    rect.setAttribute('class', `color-${(index % 8) + 1}`);
+                } else {
+                    // Usar cor de preenchimento para slots adicionados
+                    rect.setAttribute('class', 'fill-empty');
+                }
+                
+                svg.appendChild(rect);
+            });
+        };
+        
+        // Inicializar os exemplos
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLayout('input1', 'svg1', false);
+            updateLayout('input2', 'svg2', true);
+            updateLayout('input3', 'svg3', false);
+        });
+    </script>
+</body>
+</html> 
