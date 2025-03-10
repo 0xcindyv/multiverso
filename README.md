@@ -2,8 +2,6 @@
 
 An interactive 3D visualization tool for metaverse spaces based on bitmap data.
 
-![Bitmap Metaverse Viewer](./multiverso-project/public/screenshot.svg)
-
 ## Overview
 
 The Bitmap Metaverse Viewer transforms sequences of numbers into interactive 3D representations, where each number represents the size of a block in the metaverse space. This project uses advanced layout algorithms to organize blocks efficiently, creating a visually appealing and navigable representation of your metaverse space.
