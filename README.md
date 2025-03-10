@@ -2,7 +2,7 @@
 
 An interactive 3D visualization tool for metaverse spaces based on bitmap data.
 
-![Bitmap Metaverse Viewer](./metaverse-project/public/screenshot.svg)
+![Bitmap Metaverse Viewer](./multiverso-project/public/screenshot.svg)
 
 ## Overview
 
@@ -13,7 +13,6 @@ The Bitmap Metaverse Viewer transforms sequences of numbers into interactive 3D 
 Experience the Bitmap Metaverse Viewer online:
 
 - [multiverso.club](https://multiverso.club) - Main site
-- [GitHub Pages](https://0xcindyv.github.io/multiverso/) - Alternative version
 
 ## Key Features
 
@@ -47,7 +46,7 @@ Experience the Bitmap Metaverse Viewer online:
 
 2. Navigate to the project directory:
    ```bash
-   cd metaverse-project
+   cd multiverso-project
    ```
 
 3. Install dependencies:
