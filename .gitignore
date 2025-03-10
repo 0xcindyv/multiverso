@@ -45,3 +45,50 @@ coverage
 .temp 
 # Local Netlify folder
 .netlify
+
+# Ignorar arquivos grandes
+*.csv
+*.zip
+*.gz
+*.tar
+*.rar
+*.7z
+*.mp4
+*.mov
+*.avi
+*.wmv
+*.flv
+*.webm
+*.pdf
+*.psd
+*.ai
+*.sketch
+*.fig
+*.xd
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.tmp
+*.temp
+
+# Ignorar node_modules
+node_modules/
+
+# Ignorar arquivos de build
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vscode/
+.idea/
+.DS_Store
+
+# Ignorar arquivos específicos
+bitmap-utils/bitmaps.csv.zip
+bitmap-utils/playground/server/bitmaps.csv
+bitmap-utils/netlify-deploy.zip
+bitmap-utils/netlify-docs.zip

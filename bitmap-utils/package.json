@@ -1,0 +1,28 @@
+{
+  "name": "bitmap-utils",
+  "version": "1.0.0",
+  "description": "A collection of code + examples that can be useful if you are developing a Bitmap Metaverse related project",
+  "main": "example.js",
+  "type": "module",
+  "scripts": {
+    "example": "node example.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cp example.html docs/index.html && cp example.js docs/ && cp -r utils docs/ && cp -r playground docs/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitlodo/bitmap-utils.git"
+  },
+  "keywords": [
+    "bitmap",
+    "metaverse",
+    "mondrian",
+    "layout"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitlodo/bitmap-utils/issues"
+  },
+  "homepage": "https://github.com/bitlodo/bitmap-utils#readme"
+} 
