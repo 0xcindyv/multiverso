@@ -175,5 +175,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Inspired by the [BitFeed Project](https://github.com/bitfeed-project/bitfeed) by @mononaut
+- Special thanks to [bitmap-utils](https://github.com/bitlodo/bitmap-utils) by @bitlodo for providing essential utilities for bitmap visualization and layout algorithms
 - Three.js community for their excellent documentation and examples
 - React Three Fiber team for making Three.js integration with React seamless
