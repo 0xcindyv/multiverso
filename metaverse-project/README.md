@@ -1,4 +1,4 @@
-# Multiverso
+# Bitmap Multiverso Bitcoin Community
 
 An interactive 3D viewer for metaverse spaces based on bitmap data.
 
