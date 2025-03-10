@@ -1,79 +1,112 @@
-# Bitmap Metaverse Viewer
+# Bitmap Multiverso Bitcoin Community
 
-Um visualizador 3D interativo para espaços no metaverso baseados em dados de bitmap.
+An interactive 3D visualization tool for metaverse spaces based on bitmap data.
 
-![Bitmap Metaverse Viewer](./public/screenshot.svg)
+![Bitmap Metaverse Viewer](./metaverse-project/public/screenshot.svg)
 
-## Sobre o Projeto
+## Overview
 
-Este projeto permite visualizar espaços no metaverso usando dados de bitmap. Ele transforma uma sequência de números em uma representação 3D interativa, onde cada número representa o tamanho de um bloco no espaço.
+The Bitmap Metaverse Viewer transforms sequences of numbers into interactive 3D representations, where each number represents the size of a block in the metaverse space. This project uses advanced layout algorithms to organize blocks efficiently, creating a visually appealing and navigable representation of your metaverse space.
 
-O visualizador usa o algoritmo MondrianLayout para organizar os blocos de forma eficiente, criando uma representação visual do seu espaço no metaverso.
+## Live Demo
 
-## Funcionalidades
+Experience the Bitmap Metaverse Viewer online:
 
-- **Visualização 3D Interativa**: Explore seu espaço no metaverso em 3D com controles de câmera intuitivos
-- **Análise de Dados**: Visualize estatísticas detalhadas sobre seu espaço, incluindo distribuição de tamanhos
-- **Compartilhamento**: Compartilhe seu espaço com outros através de URLs ou redes sociais
-- **Exportação de Imagens**: Capture e salve imagens da sua visualização 3D
-- **Salvamento de Configurações**: Salve e carregue diferentes configurações de bitmap
-- **Importação/Exportação de Arquivos**: Importe e exporte seus dados em formatos TXT e JSON
-- **Interface Responsiva**: Funciona em dispositivos desktop e móveis
+- [multiverso.club](https://multiverso.club) - Main site
+- [GitHub Pages](https://0xcindyv.github.io/multiverso/) - Alternative version
 
-## Tecnologias Utilizadas
+## Key Features
 
-- **React**: Biblioteca para construção de interfaces de usuário
-- **TypeScript**: Superset tipado de JavaScript
-- **Three.js**: Biblioteca para renderização 3D no navegador
-- **React Three Fiber**: Renderizador React para Three.js
-- **React Three Drei**: Componentes úteis para React Three Fiber
-- **Vite**: Ferramenta de build rápida para desenvolvimento web
+- **Interactive 3D Visualization**: Explore your metaverse space in 3D with intuitive camera controls
+- **Spaceship Navigation**: Control a virtual spaceship to fly through your metaverse space
+- **Collision Detection**: Experience realistic interactions with blocks in the environment
+- **Data Analysis**: View detailed statistics about your space, including size distribution
+- **Sharing Capabilities**: Share your space with others via URLs or social media
+- **Image Export**: Capture and save images of your 3D visualization
+- **Configuration Management**: Save and load different bitmap configurations
+- **File Import/Export**: Import and export your data in TXT and JSON formats
+- **Responsive Interface**: Works seamlessly on both desktop and mobile devices
 
-## Como Executar
+## Technologies
 
-1. Clone o repositório:
+- **React**: UI library for building the application interface
+- **TypeScript**: Type-safe JavaScript for robust code
+- **Three.js**: 3D rendering library for the browser
+- **React Three Fiber**: React renderer for Three.js
+- **React Three Drei**: Useful components for React Three Fiber
+- **GSAP**: Animation library for smooth transitions
+- **Vite**: Fast build tool for web development
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/0xcindyv/multiverso.git
+   cd multiverso
    ```
-   git clone https://github.com/seu-usuario/bitmap-metaverse-viewer.git
-   cd bitmap-metaverse-viewer
+
+2. Navigate to the project directory:
+   ```bash
+   cd metaverse-project
    ```
 
-2. Instale as dependências:
-   ```
+3. Install dependencies:
+   ```bash
    npm install
    ```
 
-3. Execute o projeto em modo de desenvolvimento:
-   ```
+4. Start the development server:
+   ```bash
    npm run dev
    ```
 
-4. Acesse o visualizador em `http://localhost:5173`
+5. Open your browser and visit `http://localhost:5173`
 
-## Como Usar
+## Usage Guide
 
-1. **Inserir Dados**: Insira os valores do bitmap separados por vírgula no campo de texto
-2. **Visualizar em 3D**: Clique em "Visualizar em 3D" para gerar a visualização
-3. **Explorar**: Use o mouse para girar a câmera e a roda do mouse para zoom
-4. **Interagir**: Clique em um bloco para destacá-lo e passe o mouse sobre um bloco para ver informações
-5. **Exportar**: Clique no botão "Exportar Imagem" para salvar a visualização atual
-6. **Compartilhar**: Clique no botão "Compartilhar" para compartilhar sua visualização
-7. **Salvar**: Salve suas configurações para uso futuro
-8. **Importar/Exportar**: Importe e exporte seus dados em formatos TXT e JSON
+### Basic Usage
 
-## Formato dos Dados
+1. **Input Data**: Enter comma-separated values in the input field (e.g., `5,6,4,3,2,1`)
+2. **Visualize**: Click "Visualize in 3D" to generate the visualization
+3. **Explore**: Use mouse/touch to rotate the camera and mouse wheel/pinch to zoom
 
-O visualizador aceita uma lista de números separados por vírgula, onde cada número representa o tamanho de um bloco no espaço. Por exemplo:
+### Advanced Features
+
+#### Spaceship Navigation
+- **W/A/S/D**: Move the spaceship forward, left, backward, right
+- **Q/E**: Rotate the spaceship left/right
+- **Space**: Ascend
+- **Shift**: Descend
+- **F**: Toggle focus mode on a specific plot
+
+#### Plot Management
+- **Click on a block**: Highlight and get information about it
+- **Enter plot number**: Jump directly to a specific plot
+- **Tab**: Cycle through plots
+
+#### Data Management
+- **Save Configuration**: Name and save your current bitmap data
+- **Load Configuration**: Select from previously saved configurations
+- **Export as TXT/JSON**: Save your data in different formats
+- **Import from file**: Load data from TXT or JSON files
+
+#### Visualization Options
+- **Toggle Collision Boxes**: Press 'C' to show/hide collision detection boundaries
+- **Toggle Statistics**: View detailed statistics about your bitmap data
+- **Toggle Plot Counter**: Show/hide the plot counter interface
+
+## Data Format
+
+The viewer accepts a list of comma-separated numbers, where each number represents the size of a block in the space. For example:
 
 ```
-5,5,4,3,2,1
+5,6,6,5,6,5,7,5,5,6,6,8,5,5,5,5,6,5,4,6,5,5,5,5,5,6,5,5,5,5,5,7,5,7,5,5,5,5,5,5,5,5,5,4,5,5,5,5,5,5,5,4,5,5,4,5,5,5,5,4,4,5,4,6,4,5,4,5,5,4,4,4,5,5,6,5,5,4,4,6,5,4,5,5,5,4,5,4,5,5,4,4,4,4,4,3,4,3,3,3,5,5,4,3,3,3,2,3,4,3,5,4,3,3,3,4,3,4,5,2,4,5,5,5,5,5,4,5,4,4,4,4,3,4,3,5,5,4,5,4,4,3,5,4,4,5,5,5,5,3,4,5,5,3,4,4,5,2,3,5,4,5,5,5,5,4,4,3,4,4,3,4,4,3,3,3,4,3,4,3,4,4,4,4,4,3,3,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,3,3,3,4,4,4,4,4,3,3,3,3,4,3,3,4,3,3,4,3,4,1,3,3,3,4,2,4,3,4,5,2,3,4,3,3,3,4,3,3,4,3,2,2,2,3,3,2,2,3,3,2,2,2,4,3,3,3,1,3,2,1,1,1,1,1,4,2,3,1,2,1,2,4,2,2,8,3,3,4
 ```
 
-Isso criará 6 blocos com tamanhos 5, 5, 4, 3, 2 e 1, respectivamente.
+### Supported File Formats
 
-### Formatos de Arquivo Suportados
-
-- **TXT**: Arquivo de texto simples contendo os valores separados por vírgula
-- **JSON**: Arquivo JSON com a seguinte estrutura:
+- **TXT**: Simple text file containing comma-separated values
+- **JSON**: JSON file with the following structure:
   ```json
   {
     "bitmap": [5, 5, 4, 3, 2, 1],
@@ -82,40 +115,66 @@ Isso criará 6 blocos com tamanhos 5, 5, 4, 3, 2 e 1, respectivamente.
   }
   ```
 
-## Algoritmo MondrianLayout
+## MondrianLayout Algorithm
 
-O algoritmo MondrianLayout é usado para organizar os blocos de forma eficiente no espaço. Ele funciona da seguinte maneira:
+The MondrianLayout algorithm is used to efficiently organize blocks in space, inspired by the artistic style of Piet Mondrian. The algorithm works as follows:
 
-1. Calcula o tamanho total do espaço necessário
-2. Coloca cada bloco no espaço disponível, começando pelos maiores
-3. Preenche os espaços vazios com blocos menores
-4. Cria um layout visualmente equilibrado
+1. Calculates the total space needed based on block sizes
+2. Places each block in the available space, starting with the largest
+3. Fills empty spaces with smaller blocks
+4. Creates a visually balanced layout that maximizes space utilization
 
-## Estrutura do Projeto
+## Project Structure
 
-- `src/components/MetaverseViewer.tsx` - Componente principal de visualização 3D
-- `src/components/BitmapStats.tsx` - Componente para exibir estatísticas do bitmap
-- `src/components/SavedConfigs.tsx` - Componente para gerenciar configurações salvas
-- `src/components/ShareDialog.tsx` - Componente para compartilhar visualizações
-- `src/components/FileOperations.tsx` - Componente para importação/exportação de arquivos
-- `src/utils/MondrianLayout.ts` - Algoritmo para organização dos blocos
-- `src/utils/bitmapStats.ts` - Utilitário para calcular estatísticas do bitmap
-- `src/utils/storage.ts` - Utilitário para armazenar e recuperar configurações
-- `src/utils/urlParams.ts` - Utilitário para gerenciar parâmetros de URL
-- `src/utils/fileUtils.ts` - Utilitário para importação/exportação de arquivos
-- `src/App.tsx` - Componente principal da aplicação
-- `src/App.css` - Estilos da aplicação
+- `src/components/MetaverseViewer.tsx` - Main 3D visualization component
+- `src/components/BitmapStats.tsx` - Component for displaying bitmap statistics
+- `src/components/SavedConfigs.tsx` - Component for managing saved configurations
+- `src/components/ShareDialog.tsx` - Component for sharing visualizations
+- `src/components/FileOperations.tsx` - Component for file import/export
+- `src/components/PlotCounter.jsx` - Component for counting and navigating plots
+- `src/utils/MondrianLayout.ts` - Algorithm for block organization
+- `src/utils/bitmapStats.ts` - Utility for calculating bitmap statistics
+- `src/utils/storage.ts` - Utility for storing and retrieving configurations
+- `src/utils/urlParams.ts` - Utility for managing URL parameters
+- `src/utils/fileUtils.ts` - Utility for file import/export
+- `src/App.tsx` - Main application component
+- `src/App.css` - Application styles
 
-## Contribuindo
+## Performance Considerations
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+The Bitmap Metaverse Viewer is optimized for performance, even with large datasets:
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Faça commit das suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Faça push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
+- **Efficient Rendering**: Uses Three.js optimizations for smooth performance
+- **Lazy Loading**: Components load only when needed
+- **Memoization**: Prevents unnecessary recalculations
+- **Collision Detection**: Optimized algorithms for real-time interaction
+- **Responsive Design**: Adapts to different screen sizes and devices
 
-## Licença
+## Browser Compatibility
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
+The Bitmap Metaverse Viewer works best in modern browsers that support WebGL:
+
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Inspired by the [BitFeed Project](https://github.com/bitfeed-project/bitfeed) by @mononaut
+- Three.js community for their excellent documentation and examples
+- React Three Fiber team for making Three.js integration with React seamless
