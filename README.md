@@ -94,26 +94,6 @@ Experience the Bitmap Metaverse Viewer online:
 - **Toggle Statistics**: View detailed statistics about your bitmap data
 - **Toggle Plot Counter**: Show/hide the plot counter interface
 
-## Data Format
-
-The viewer accepts a list of comma-separated numbers, where each number represents the size of a block in the space. For example:
-
-```
-5,6,6,5,6,5,7,5,5,6,6,8,5,5,5,5,6,5,4,6,5,5,5,5,5,6,5,5,5,5,5,7,5,7,5,5,5,5,5,5,5,5,5,4,5,5,5,5,5,5,5,4,5,5,4,5,5,5,5,4,4,5,4,6,4,5,4,5,5,4,4,4,5,5,6,5,5,4,4,6,5,4,5,5,5,4,5,4,5,5,4,4,4,4,4,3,4,3,3,3,5,5,4,3,3,3,2,3,4,3,5,4,3,3,3,4,3,4,5,2,4,5,5,5,5,5,4,5,4,4,4,4,3,4,3,5,5,4,5,4,4,3,5,4,4,5,5,5,5,3,4,5,5,3,4,4,5,2,3,5,4,5,5,5,5,4,4,3,4,4,3,4,4,3,3,3,4,3,4,3,4,4,4,4,4,3,3,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,3,3,3,4,4,4,4,4,3,3,3,3,4,3,3,4,3,3,4,3,4,1,3,3,3,4,2,4,3,4,5,2,3,4,3,3,3,4,3,3,4,3,2,2,2,3,3,2,2,3,3,2,2,2,4,3,3,3,1,3,2,1,1,1,1,1,4,2,3,1,2,1,2,4,2,2,8,3,3,4
-```
-
-### Supported File Formats
-
-- **TXT**: Simple text file containing comma-separated values
-- **JSON**: JSON file with the following structure:
-  ```json
-  {
-    "bitmap": [5, 5, 4, 3, 2, 1],
-    "createdAt": "2024-03-08T12:00:00.000Z",
-    "format": "bitmap-metaverse-viewer"
-  }
-  ```
-
 ## MondrianLayout Algorithm
 
 The MondrianLayout algorithm is used to efficiently organize blocks in space, inspired by the artistic style of Piet Mondrian. The algorithm works as follows:
