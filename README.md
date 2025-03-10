@@ -61,12 +61,6 @@ Experience the Bitmap Metaverse Viewer online:
 
 ## Usage Guide
 
-### Basic Usage
-
-1. **Input Data**: Enter comma-separated values in the input field (e.g., `5,6,4,3,2,1`)
-2. **Visualize**: Click "Visualize in 3D" to generate the visualization
-3. **Explore**: Use mouse/touch to rotate the camera and mouse wheel/pinch to zoom
-
 ### Advanced Features
 
 #### Spaceship Navigation
@@ -76,22 +70,6 @@ Experience the Bitmap Metaverse Viewer online:
 - **Shift**: Descend
 - **F**: Toggle focus mode on a specific plot
 
-#### Plot Management
-- **Click on a block**: Highlight and get information about it
-- **Enter plot number**: Jump directly to a specific plot
-- **Tab**: Cycle through plots
-
-#### Data Management
-- **Save Configuration**: Name and save your current bitmap data
-- **Load Configuration**: Select from previously saved configurations
-- **Export as TXT/JSON**: Save your data in different formats
-- **Import from file**: Load data from TXT or JSON files
-
-#### Visualization Options
-- **Toggle Collision Boxes**: Press 'C' to show/hide collision detection boundaries
-- **Toggle Statistics**: View detailed statistics about your bitmap data
-- **Toggle Plot Counter**: Show/hide the plot counter interface
-
 ## MondrianLayout Algorithm
 
 The MondrianLayout algorithm is used to efficiently organize blocks in space, inspired by the artistic style of Piet Mondrian. The algorithm works as follows:
@@ -100,32 +78,6 @@ The MondrianLayout algorithm is used to efficiently organize blocks in space, in
 2. Places each block in the available space, starting with the largest
 3. Fills empty spaces with smaller blocks
 4. Creates a visually balanced layout that maximizes space utilization
-
-## Project Structure
-
-- `src/components/MetaverseViewer.tsx` - Main 3D visualization component
-- `src/components/BitmapStats.tsx` - Component for displaying bitmap statistics
-- `src/components/SavedConfigs.tsx` - Component for managing saved configurations
-- `src/components/ShareDialog.tsx` - Component for sharing visualizations
-- `src/components/FileOperations.tsx` - Component for file import/export
-- `src/components/PlotCounter.jsx` - Component for counting and navigating plots
-- `src/utils/MondrianLayout.ts` - Algorithm for block organization
-- `src/utils/bitmapStats.ts` - Utility for calculating bitmap statistics
-- `src/utils/storage.ts` - Utility for storing and retrieving configurations
-- `src/utils/urlParams.ts` - Utility for managing URL parameters
-- `src/utils/fileUtils.ts` - Utility for file import/export
-- `src/App.tsx` - Main application component
-- `src/App.css` - Application styles
-
-## Performance Considerations
-
-The Bitmap Metaverse Viewer is optimized for performance, even with large datasets:
-
-- **Efficient Rendering**: Uses Three.js optimizations for smooth performance
-- **Lazy Loading**: Components load only when needed
-- **Memoization**: Prevents unnecessary recalculations
-- **Collision Detection**: Optimized algorithms for real-time interaction
-- **Responsive Design**: Adapts to different screen sizes and devices
 
 ## Browser Compatibility
 
