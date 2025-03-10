@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'metaverse-project/**'
+      - 'multiverso-project/**'
 
 jobs:
   deploy:
@@ -20,22 +20,22 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: metaverse-project/package-lock.json
+          cache-dependency-path: multiverso-project/package-lock.json
           
       - name: Install dependencies
         run: |
-          cd metaverse-project
+          cd multiverso-project
           npm ci
           
       - name: Build project
         run: |
-          cd metaverse-project
+          cd multiverso-project
           npm run build
           
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2
         with:
-          publish-dir: './metaverse-project/dist'
+          publish-dir: './multiverso-project/dist'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"

@@ -1,5 +1,5 @@
 [build]
-  base = "metaverse-project/"
+  base = "multiverso-project/"
   publish = "dist/"
   command = "npm run build"
 
