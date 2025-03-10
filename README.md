@@ -4,25 +4,21 @@ An interactive 3D visualization tool for metaverse spaces based on bitmap data.
 
 ## Overview
 
-The Bitmap Metaverse Viewer transforms sequences of numbers into interactive 3D representations, where each number represents the size of a block in the metaverse space. This project uses advanced layout algorithms to organize blocks efficiently, creating a visually appealing and navigable representation of your metaverse space.
+203779.bitmap Multiverso Community transforms sequences of numbers into interactive 3D representations, where each number represents the size of a block in the metaverse space. This project uses advanced layout algorithms to organize blocks efficiently, creating a visually appealing and navigable representation of your metaverse space.
 
 ## Live Demo
 
-Experience the Bitmap Metaverse Viewer online:
+Experience the 203779.bitmap Multiverso Community:
 
 - [multiverso.club](https://multiverso.club) - Main site
 
 ## Key Features
 
-- **Interactive 3D Visualization**: Explore your metaverse space in 3D with intuitive camera controls
-- **Spaceship Navigation**: Control a virtual spaceship to fly through your metaverse space
+- **Interactive 3D Visualization**: Explore the multiverso space in 3D with intuitive camera controls
+- **Spaceship Navigation**: Control a virtual spaceship to fly through the multiverso
 - **Collision Detection**: Experience realistic interactions with blocks in the environment
 - **Data Analysis**: View detailed statistics about your space, including size distribution
-- **Sharing Capabilities**: Share your space with others via URLs or social media
-- **Image Export**: Capture and save images of your 3D visualization
-- **Configuration Management**: Save and load different bitmap configurations
-- **File Import/Export**: Import and export your data in TXT and JSON formats
-- **Responsive Interface**: Works seamlessly on both desktop and mobile devices
+- **Responsive Interface**: Works on desktop for now
 
 ## Technologies
 
@@ -63,12 +59,16 @@ Experience the Bitmap Metaverse Viewer online:
 
 ### Advanced Features
 
-#### Spaceship Navigation
-- **W/A/S/D**: Move the spaceship forward, left, backward, right
-- **Q/E**: Rotate the spaceship left/right
-- **Space**: Ascend
-- **Shift**: Descend
-- **F**: Toggle focus mode on a specific plot
+#### Movement Controls
+- **W or ↑**: Move forward
+- **S or ↓**: Move backward
+- **A or ←**: Move left
+- **D or →**: Move right
+- **E or Space**: Move up
+- **Control**: Move down
+- **Shift**: Increase speed
+- **Mouse**: Look around and change direction
+- **Search**: Enter the parcel number (0-281)
 
 ## MondrianLayout Algorithm
 
