@@ -1,0 +1,51 @@
+# Dependabot configuration file
+# See https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    # Look for `package.json` and `lock` files in the `multiverso-project` directory
+    directory: "/multiverso-project"
+    # Check for updates once a week
+    schedule:
+      interval: "weekly"
+    # Specify labels for pull requests
+    labels:
+      - "npm"
+      - "dependencies"
+    # Set security updates to high priority
+    open-pull-requests-limit: 10
+    # Apply security updates automatically
+    security-updates-only: true
+    
+  # Enable version updates for npm in bitmap-utils/playground/client
+  - package-ecosystem: "npm"
+    directory: "/bitmap-utils/playground/client"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "npm"
+      - "dependencies"
+    open-pull-requests-limit: 5
+    security-updates-only: true
+    
+  # Enable version updates for npm in bitmap-utils/playground/server
+  - package-ecosystem: "npm"
+    directory: "/bitmap-utils/playground/server"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "npm"
+      - "dependencies"
+    open-pull-requests-limit: 5
+    security-updates-only: true
+    
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "github-actions"
+      - "dependencies" 
