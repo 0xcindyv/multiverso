@@ -1,5 +1,11 @@
 import { useMemo } from 'react';
-import { BitmapStats, calculateBitmapStats, formatNumber, calculatePercentage } from '../utils/bitmapStats';
+import { 
+  calculateBitmapStats, 
+  formatNumber, 
+  calculatePercentage 
+} from '../utils/analysis';
+import type { BitmapStats } from '../utils/analysis';
+import { SIZE_COLORS } from '../utils/constants';
 
 interface BitmapStatsProps {
   bitmapData: number[];
@@ -7,28 +13,33 @@ interface BitmapStatsProps {
 }
 
 export default function BitmapStatsComponent({ bitmapData, dimensions }: BitmapStatsProps) {
-  // Calcular estatísticas do bitmap
+  // Calculate bitmap statistics
   const stats: BitmapStats = useMemo(() => {
     return calculateBitmapStats(bitmapData, dimensions);
   }, [bitmapData, dimensions]);
 
-  // Obter os tamanhos únicos ordenados para exibir a distribuição
+  // Get unique sizes sorted to display distribution
   const uniqueSizes = useMemo(() => {
     return Object.keys(stats.sizeDistribution)
       .map(size => parseInt(size))
-      .sort((a, b) => b - a); // Ordenar do maior para o menor
+      .sort((a, b) => b - a); // Sort from largest to smallest
   }, [stats.sizeDistribution]);
 
-  // Calcular a cor para a barra de distribuição
+  // Calculate color for distribution bar
   const getBarColor = (size: number): string => {
-    // Escala de cores baseada no tamanho relativo
+    // Use predefined colors from constants if available
+    if (SIZE_COLORS[size as keyof typeof SIZE_COLORS]) {
+      return SIZE_COLORS[size as keyof typeof SIZE_COLORS];
+    }
+    
+    // Fallback to color scale based on relative size
     const ratio = (size - stats.minSize) / (stats.maxSize - stats.minSize || 1);
     
-    // Cores do menor para o maior: azul -> verde -> amarelo -> vermelho
-    if (ratio < 0.25) return '#64B5F6'; // Azul
-    if (ratio < 0.5) return '#81C784';  // Verde
-    if (ratio < 0.75) return '#FFD54F'; // Amarelo
-    return '#E57373';                   // Vermelho
+    // Colors from smallest to largest: blue -> green -> yellow -> red
+    if (ratio < 0.25) return '#64B5F6'; // Blue
+    if (ratio < 0.5) return '#81C784';  // Green
+    if (ratio < 0.75) return '#FFD54F'; // Yellow
+    return '#E57373';                   // Red
   };
 
   return (

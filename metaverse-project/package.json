@@ -1,5 +1,5 @@
 {
-  "name": "bitmap-metaverse-viewer",
+  "name": "multiverso",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -41,7 +41,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/seu-usuario/bitmap-metaverse-viewer.git"
+    "url": "https://github.com/0xcindyv/multiverso.git"
   },
   "keywords": [
     "bitmap",

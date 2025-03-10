@@ -5,9 +5,12 @@ import MetaverseViewer from './components/MetaverseViewer'
 // @ts-ignore
 import PlotCounter from './components/PlotCounter'
 import FileOperations from './components/FileOperations'
-import { saveBitmapConfig, SavedBitmap } from './utils/storage'
+import { saveBitmapConfig } from './utils/storage/index'
+import type { SavedBitmap } from './utils/storage/index'
 import { getUrlParam, hasShareParams } from './utils/urlParams'
 import { LanguageProvider } from './utils/languageContext'
+import { parseBitmapString } from './utils/common'
+import { DEFAULT_BITMAP_STRING } from './utils/constants'
 
 function App() {
   // State to store the bitmap data
@@ -26,9 +29,6 @@ function App() {
   const [activePanel, setActivePanel] = useState<string | null>(null);
   // State to control whether to show the plot counter
   const [showPlotCounter, setShowPlotCounter] = useState<boolean>(false);
-
-  // Default bitmap data from the user's input
-  const defaultBitmapString = '5,6,6,5,6,5,7,5,5,6,6,8,5,5,5,5,6,5,4,6,5,5,5,5,5,6,5,5,5,5,5,7,5,7,5,5,5,5,5,5,5,5,5,4,5,5,5,5,5,5,5,4,5,5,4,5,5,5,5,4,4,5,4,6,4,5,4,5,5,4,4,4,5,5,6,5,5,4,4,6,5,4,5,5,5,4,5,4,5,5,4,4,4,4,4,3,4,3,3,3,5,5,4,3,3,3,2,3,4,3,5,4,3,3,3,4,3,4,5,2,4,5,5,5,5,5,4,5,4,4,4,4,3,4,3,5,5,4,5,4,4,3,5,4,4,5,5,5,5,3,4,5,5,3,4,4,5,2,3,5,4,5,5,5,5,4,4,3,4,4,3,4,4,3,3,3,4,3,4,3,4,4,4,4,4,3,3,4,3,4,4,4,4,4,4,4,3,4,4,4,4,4,3,3,3,4,4,4,4,4,3,3,3,3,4,3,3,4,3,3,4,3,4,1,3,3,3,4,2,4,3,4,5,2,3,4,3,3,3,4,3,3,4,3,2,2,2,3,3,2,2,3,3,2,2,2,4,3,3,3,1,3,2,1,1,1,1,1,4,2,3,1,2,1,2,4,2,2,8,3,3,4';
 
   // Refs for panels
   const inputPanelRef = useRef<HTMLDivElement>(null);
@@ -49,14 +49,14 @@ function App() {
         } catch (error) {
           console.error('Error parsing URL data parameter:', error);
           // Fallback to default data
-          setBitmapString(defaultBitmapString);
-          setBitmapData(parseBitmapString(defaultBitmapString));
+          setBitmapString(DEFAULT_BITMAP_STRING);
+          setBitmapData(parseBitmapString(DEFAULT_BITMAP_STRING));
         }
       }
     } else {
       // No URL parameters, use default data
-      setBitmapString(defaultBitmapString);
-      setBitmapData(parseBitmapString(defaultBitmapString));
+      setBitmapString(DEFAULT_BITMAP_STRING);
+      setBitmapData(parseBitmapString(DEFAULT_BITMAP_STRING));
     }
   }, []);
 

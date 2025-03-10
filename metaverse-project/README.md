@@ -1,79 +1,118 @@
-# Bitmap Metaverse Viewer
+# Multiverso
 
-Um visualizador 3D interativo para espaços no metaverso baseados em dados de bitmap.
+An interactive 3D viewer for metaverse spaces based on bitmap data.
 
 ![Bitmap Metaverse Viewer](./public/screenshot.svg)
 
-## Sobre o Projeto
+## About the Project
 
-Este projeto permite visualizar espaços no metaverso usando dados de bitmap. Ele transforma uma sequência de números em uma representação 3D interativa, onde cada número representa o tamanho de um bloco no espaço.
+This project allows you to visualize metaverse spaces using bitmap data. It transforms a sequence of numbers into an interactive 3D representation, where each number represents the size of a block in space.
 
-O visualizador usa o algoritmo MondrianLayout para organizar os blocos de forma eficiente, criando uma representação visual do seu espaço no metaverso.
+The viewer uses the MondrianLayout algorithm to efficiently organize blocks, creating a visual representation of your metaverse space.
 
-## Funcionalidades
+## Features
 
-- **Visualização 3D Interativa**: Explore seu espaço no metaverso em 3D com controles de câmera intuitivos
-- **Análise de Dados**: Visualize estatísticas detalhadas sobre seu espaço, incluindo distribuição de tamanhos
-- **Compartilhamento**: Compartilhe seu espaço com outros através de URLs ou redes sociais
-- **Exportação de Imagens**: Capture e salve imagens da sua visualização 3D
-- **Salvamento de Configurações**: Salve e carregue diferentes configurações de bitmap
-- **Importação/Exportação de Arquivos**: Importe e exporte seus dados em formatos TXT e JSON
-- **Interface Responsiva**: Funciona em dispositivos desktop e móveis
+- **Interactive 3D Visualization**: Explore your metaverse space in 3D with intuitive camera controls
+- **Data Analysis**: View detailed statistics about your space, including size distribution
+- **Sharing**: Share your space with others via URLs or social media
+- **Image Export**: Capture and save images of your 3D visualization
+- **Configuration Saving**: Save and load different bitmap configurations
+- **File Import/Export**: Import and export your data in TXT and JSON formats
+- **Responsive Interface**: Works on desktop and mobile devices
+- **Spaceship Navigation**: Navigate through your 3D space with a controllable spaceship
+- **Collision Detection**: Realistic collision detection between the spaceship and blocks
+- **Multi-language Support**: Interface available in multiple languages
 
-## Tecnologias Utilizadas
+## Technologies Used
 
-- **React**: Biblioteca para construção de interfaces de usuário
-- **TypeScript**: Superset tipado de JavaScript
-- **Three.js**: Biblioteca para renderização 3D no navegador
-- **React Three Fiber**: Renderizador React para Three.js
-- **React Three Drei**: Componentes úteis para React Three Fiber
-- **Vite**: Ferramenta de build rápida para desenvolvimento web
+- **React 19**: Library for building user interfaces
+- **TypeScript**: Typed superset of JavaScript
+- **Three.js**: Library for 3D rendering in the browser
+- **React Three Fiber**: React renderer for Three.js
+- **React Three Drei**: Useful components for React Three Fiber
+- **GSAP**: Animation library for smooth transitions
+- **Vite**: Fast build tool for web development
 
-## Como Executar
+## Project Structure
 
-1. Clone o repositório:
+```
+src/
+├── assets/            # Static assets and resources
+├── components/        # React components
+│   ├── BitmapStats.tsx       # Component for displaying bitmap statistics
+│   ├── FileOperations.tsx    # Component for file import/export operations
+│   ├── MetaverseViewer.tsx   # Main 3D visualization component
+│   ├── PlotCounter.jsx       # Component for counting and displaying plots
+│   ├── SavedConfigs.tsx      # Component for managing saved configurations
+│   └── ShareDialog.tsx       # Component for sharing visualizations
+├── utils/             # Utility functions and helpers
+│   ├── analysis/      # Analysis utilities
+│   ├── layout/        # Layout algorithms
+│   ├── storage/       # Storage utilities
+│   ├── bitmapStats.ts        # Utility for calculating bitmap statistics
+│   ├── checkPlotNumber.ts    # Utility for validating plot numbers
+│   ├── common.ts             # Common utility functions
+│   ├── constants.ts          # Application constants
+│   ├── fileUtils.ts          # Utilities for file operations
+│   ├── languageContext.tsx   # Context for language management
+│   ├── MondrianLayout.ts     # Algorithm for block organization
+│   ├── plotVerifier.ts       # Utility for verifying plots
+│   ├── plotVerifierTest.ts   # Tests for plot verification
+│   ├── storage.ts            # Utility for storing and retrieving configurations
+│   └── urlParams.ts          # Utility for managing URL parameters
+├── App.css            # Application styles
+├── App.tsx            # Main application component
+├── index.css          # Global styles
+├── main.tsx           # Application entry point
+└── vite-env.d.ts      # Vite environment type definitions
+```
+
+## How to Run
+
+1. Clone the repository:
    ```
-   git clone https://github.com/seu-usuario/bitmap-metaverse-viewer.git
-   cd bitmap-metaverse-viewer
+   git clone https://github.com/0xcindyv/multiverso.git
+   cd multiverso
    ```
 
-2. Instale as dependências:
+2. Install dependencies:
    ```
    npm install
    ```
 
-3. Execute o projeto em modo de desenvolvimento:
+3. Run the project in development mode:
    ```
    npm run dev
    ```
 
-4. Acesse o visualizador em `http://localhost:5173`
+4. Access the viewer at `http://localhost:5173`
 
-## Como Usar
+## How to Use
 
-1. **Inserir Dados**: Insira os valores do bitmap separados por vírgula no campo de texto
-2. **Visualizar em 3D**: Clique em "Visualizar em 3D" para gerar a visualização
-3. **Explorar**: Use o mouse para girar a câmera e a roda do mouse para zoom
-4. **Interagir**: Clique em um bloco para destacá-lo e passe o mouse sobre um bloco para ver informações
-5. **Exportar**: Clique no botão "Exportar Imagem" para salvar a visualização atual
-6. **Compartilhar**: Clique no botão "Compartilhar" para compartilhar sua visualização
-7. **Salvar**: Salve suas configurações para uso futuro
-8. **Importar/Exportar**: Importe e exporte seus dados em formatos TXT e JSON
+1. **Enter Data**: Enter bitmap values separated by commas in the text field
+2. **View in 3D**: Click "View in 3D" to generate the visualization
+3. **Explore**: Use the mouse to rotate the camera and the mouse wheel to zoom
+4. **Navigate**: Use the spaceship to navigate through the 3D space (WASD keys)
+5. **Interact**: Click on a block to highlight it and hover over a block to see information
+6. **Export**: Click the "Export Image" button to save the current view
+7. **Share**: Click the "Share" button to share your visualization
+8. **Save**: Save your configurations for future use
+9. **Import/Export**: Import and export your data in TXT and JSON formats
 
-## Formato dos Dados
+## Data Format
 
-O visualizador aceita uma lista de números separados por vírgula, onde cada número representa o tamanho de um bloco no espaço. Por exemplo:
+The viewer accepts a list of comma-separated numbers, where each number represents the size of a block in space. For example:
 
 ```
 5,5,4,3,2,1
 ```
 
-Isso criará 6 blocos com tamanhos 5, 5, 4, 3, 2 e 1, respectivamente.
+This will create 6 blocks with sizes 5, 5, 4, 3, 2, and 1, respectively.
 
-### Formatos de Arquivo Suportados
+### Supported File Formats
 
-- **TXT**: Arquivo de texto simples contendo os valores separados por vírgula
-- **JSON**: Arquivo JSON com a seguinte estrutura:
+- **TXT**: Simple text file containing comma-separated values
+- **JSON**: JSON file with the following structure:
   ```json
   {
     "bitmap": [5, 5, 4, 3, 2, 1],
@@ -82,40 +121,25 @@ Isso criará 6 blocos com tamanhos 5, 5, 4, 3, 2 e 1, respectivamente.
   }
   ```
 
-## Algoritmo MondrianLayout
+## MondrianLayout Algorithm
 
-O algoritmo MondrianLayout é usado para organizar os blocos de forma eficiente no espaço. Ele funciona da seguinte maneira:
+The MondrianLayout algorithm is used to efficiently organize blocks in space. It works as follows:
 
-1. Calcula o tamanho total do espaço necessário
-2. Coloca cada bloco no espaço disponível, começando pelos maiores
-3. Preenche os espaços vazios com blocos menores
-4. Cria um layout visualmente equilibrado
+1. Calculates the total size of the required space
+2. Places each block in the available space, starting with the largest
+3. Fills empty spaces with smaller blocks
+4. Creates a visually balanced layout
 
-## Estrutura do Projeto
+## Contributing
 
-- `src/components/MetaverseViewer.tsx` - Componente principal de visualização 3D
-- `src/components/BitmapStats.tsx` - Componente para exibir estatísticas do bitmap
-- `src/components/SavedConfigs.tsx` - Componente para gerenciar configurações salvas
-- `src/components/ShareDialog.tsx` - Componente para compartilhar visualizações
-- `src/components/FileOperations.tsx` - Componente para importação/exportação de arquivos
-- `src/utils/MondrianLayout.ts` - Algoritmo para organização dos blocos
-- `src/utils/bitmapStats.ts` - Utilitário para calcular estatísticas do bitmap
-- `src/utils/storage.ts` - Utilitário para armazenar e recuperar configurações
-- `src/utils/urlParams.ts` - Utilitário para gerenciar parâmetros de URL
-- `src/utils/fileUtils.ts` - Utilitário para importação/exportação de arquivos
-- `src/App.tsx` - Componente principal da aplicação
-- `src/App.css` - Estilos da aplicação
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
-## Contribuindo
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+## License
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Faça commit das suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Faça push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
+This project is licensed under the MIT License - see the LICENSE file for details.

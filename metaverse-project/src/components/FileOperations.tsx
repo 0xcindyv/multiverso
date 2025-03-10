@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { exportToFile, exportToJson, importFromFile } from '../utils/fileUtils';
+import { parseBitmapString } from '../utils/common';
 
 interface FileOperationsProps {
   bitmapString: string;
@@ -7,12 +8,20 @@ interface FileOperationsProps {
 }
 
 export default function FileOperations({ bitmapString, onImport }: FileOperationsProps) {
-  // Referência para o input de arquivo
+  // Reference for file input
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // Estado para controlar mensagens de erro/sucesso
+  // State to control error/success messages
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
-  // Função para exportar os dados como arquivo de texto
+  // Function to show messages
+  const showMessage = (text: string, type: 'success' | 'error') => {
+    setMessage({ text, type });
+    setTimeout(() => {
+      setMessage(null);
+    }, 3000);
+  };
+
+  // Function to export data as text file
   const handleExportTxt = () => {
     try {
       exportToFile(bitmapString, 'bitmap-data');
@@ -23,13 +32,13 @@ export default function FileOperations({ bitmapString, onImport }: FileOperation
     }
   };
 
-  // Função para exportar os dados como arquivo JSON
+  // Function to export data as JSON file
   const handleExportJson = () => {
     try {
-      // Converter a string de bitmap para um array de números
-      const bitmapData = bitmapString.split(',').map(num => parseInt(num.trim())).filter(num => !isNaN(num));
+      // Convert bitmap string to array of numbers using common utility
+      const bitmapData = parseBitmapString(bitmapString);
       
-      // Criar um objeto com os dados
+      // Create object with data
       const data = {
         bitmap: bitmapData,
         createdAt: new Date().toISOString(),
@@ -44,14 +53,14 @@ export default function FileOperations({ bitmapString, onImport }: FileOperation
     }
   };
 
-  // Função para abrir o diálogo de seleção de arquivo
+  // Function to open file selection dialog
   const handleImportClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
 
-  // Função para processar o arquivo importado
+  // Function to process imported file
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -59,52 +68,42 @@ export default function FileOperations({ bitmapString, onImport }: FileOperation
     const file = files[0];
     
     try {
-      // Verificar o tipo de arquivo
+      // Check file type
       if (file.name.endsWith('.json')) {
-        // Importar como JSON
+        // Import as JSON
         const data = await importFromFile(file);
         
         try {
-          // Tentar analisar o JSON
+          // Try to analyze JSON
           const jsonData = JSON.parse(data);
           
-          // Verificar se o JSON tem o formato esperado
+          // Check if JSON has expected format
           if (jsonData.bitmap && Array.isArray(jsonData.bitmap)) {
-            // Converter o array de números para uma string
+            // Convert array of numbers to string
             const bitmapString = jsonData.bitmap.join(',');
             onImport(bitmapString);
             showMessage('Dados importados com sucesso!', 'success');
           } else {
-            showMessage('Formato de arquivo JSON inválido.', 'error');
+            showMessage('Invalid JSON format.', 'error');
           }
         } catch (error) {
-          showMessage('Erro ao analisar o arquivo JSON.', 'error');
+          showMessage('Error analyzing JSON file.', 'error');
         }
       } else {
-        // Importar como texto
+        // Import as text
         const data = await importFromFile(file);
         onImport(data);
         showMessage('Dados importados com sucesso!', 'success');
       }
     } catch (error) {
-      showMessage('Erro ao importar o arquivo. Tente novamente.', 'error');
-      console.error('Erro ao importar arquivo:', error);
+      showMessage('Error importing file. Try again.', 'error');
+      console.error('Error importing file:', error);
     }
     
-    // Limpar o input de arquivo
+    // Clear file input
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-  };
-
-  // Função para exibir mensagens temporárias
-  const showMessage = (text: string, type: 'success' | 'error') => {
-    setMessage({ text, type });
-    
-    // Limpar a mensagem após 3 segundos
-    setTimeout(() => {
-      setMessage(null);
-    }, 3000);
   };
 
   return (
@@ -141,7 +140,7 @@ export default function FileOperations({ bitmapString, onImport }: FileOperation
         </div>
       </div>
       
-      {/* Input de arquivo oculto */}
+      {/* Hidden file input */}
       <input
         type="file"
         ref={fileInputRef}
@@ -150,7 +149,7 @@ export default function FileOperations({ bitmapString, onImport }: FileOperation
         style={{ display: 'none' }}
       />
       
-      {/* Mensagem de erro/sucesso */}
+      {/* Error/success message */}
       {message && (
         <div className={`file-message ${message.type}`}>
           {message.text}
